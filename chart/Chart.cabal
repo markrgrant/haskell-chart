@@ -50,6 +50,7 @@ library
         Graphics.Rendering.Chart.Plot.Annotation,
         Graphics.Rendering.Chart.Plot.AreaSpots,
         Graphics.Rendering.Chart.Plot.Bars,
+        Graphics.Rendering.Chart.Plot.Box,
         Graphics.Rendering.Chart.Plot.Candle,
         Graphics.Rendering.Chart.Plot.ErrBars,
         Graphics.Rendering.Chart.Plot.FillBetween,

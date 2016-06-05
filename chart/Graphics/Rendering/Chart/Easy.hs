@@ -41,6 +41,7 @@ module Graphics.Rendering.Chart.Easy(
   line,
   points,
   bars,
+  boxes,
   setColors,
   setShapes
   ) where
@@ -93,9 +94,19 @@ isFilled :: PointShape -> Bool
 isFilled PointShapeCircle = True
 isFilled PointShapePolygon{} = True
 isFilled _ = False
-    
--- | Construct a bar chart with the given titles and data, using the
+
+
+-- | Construct a box chart with the given titles and data, using the
 -- next available colors    
+boxes :: (PlotValue y) => String -> [(x,[y])] -> EC l (PlotBox x y)
+boxes title vals = liftEC $ do
+    plot_box_title .= title
+    plot_box_values .= vals
+    plot_box_width .= 20
+
+
+-- | Construct a bar chart with the given titles and data, using the
+-- next available colors
 bars :: (PlotValue x, BarsPlotValue y) => [String] -> [(x,[y])] -> EC l (PlotBars x y)
 bars titles vals = liftEC $ do
     styles <- sequence [fmap mkStyle takeColor | _ <- titles]
