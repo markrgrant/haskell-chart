@@ -17,13 +17,11 @@
 
 module Graphics.Rendering.Chart.Plot.Box(
     PlotBox(..),
-
-    plotBoxes,
+    plotBox,
     plot_box_style,
     plot_box_title,
     plot_box_width,
     plot_box_values,
-
 ) where
 
 
@@ -64,21 +62,19 @@ data PlotBox x y = PlotBox {
 
 -- Define the "def" function so that we can construct new Box charts 
 -- more easily
-instance Default (PlotBox x y) where
+instance PlotValue y => Default (PlotBox x y) where
   def = PlotBox
     { _plot_box_style  = istyle
     , _plot_box_title  = ""
     , _plot_box_values = []
-    , _plot_box_width  = 40
+    , _plot_box_width  = 20
     }
     where
         istyle =  (solidFillStyle (opaque white), Just (solidLine 2.0 $ opaque black))
 
 
--- Create a Plot from a PlotBox. This just entails defining a renderer
--- function, a legend, and the points to be plotted.
-plotBoxes :: (Fractional y, PlotValue y) => PlotBox x y -> Plot x y
-plotBoxes p = Plot {
+plotBox :: (Fractional y, PlotValue y) => PlotBox x y -> Plot x y
+plotBox p = Plot {
         _plot_render     = renderPlotBoxes p,
         _plot_legend     = [(_plot_box_title p, renderPlotLegendBoxes (_plot_box_style p))],
         _plot_all_points = allBoxPoints p
@@ -225,14 +221,15 @@ boxStats s = BoxStats {
           u   = if isEven
                     then findMedian (drop mid lst)
                     else findMedian (drop (mid+1) lst)
-          findMedian x =  
-              if isEven
-                  then let mid1 = s !! ((len `div` 2) - 1)
-                           mid2 = s !! (len `div` 2) 
-                       in  (mid1 + mid2) / 2
-                  else x !! (len `div` 2)
-              where len = length x
-                    isEven = len `mod` 2 == 0
+
+findMedian x =  
+  if isEven
+      then let mid1 = x !! ((len `div` 2) - 1)
+               mid2 = x !! (len `div` 2) 
+           in  (mid1 + mid2) / 2
+      else x !! (len `div` 2)
+  where len = length x
+        isEven = len `mod` 2 == 0
 
 
 $( makeLenses ''PlotBox )
