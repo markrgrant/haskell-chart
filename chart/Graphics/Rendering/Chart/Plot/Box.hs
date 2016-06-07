@@ -1,8 +1,6 @@
 -----------------------------------------------------------------------------
 -- |
--- Module      :  Graphics.Rendering.Chart.Plot.Bars
--- Copyright   :  (c) Tim Docker 2006, 2014
--- License     :  BSD-style (see chart/COPYRIGHT)
+-- Module      :  Graphics.Rendering.Chart.Plot.Box
 --
 -- BoxPlot Charts
 --
